@@ -50,7 +50,7 @@ const cmd = `yt-dlp --ffmpeg-location "${ffmpegPath}" -x --audio-format mp3 -o "
 
    
 
-    const fileUrl = `http://192.168.1.7:3000/downloads/${filename}`;
+    const fileUrl = `https://music-player-backend-ejtd.onrender.com/downloads/${filename}`;
 
     // Send the response in the format your frontend expects 
     res.json({ url: fileUrl });
