@@ -2,6 +2,8 @@ import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
+import ffmpeg from 'fluent-ffmpeg';
+
 
 
 const DOWNLOAD_DIR = path.join(process.cwd(), 'downloads');
@@ -17,12 +19,25 @@ const mp3Route = (req, res) => {
   if (!url || !url.startsWith('http')) {
     return res.status(400).json({ error: 'Missing or invalid URL' });
   }
+  
 
-  const filename = `audio_${Date.now()}.mp3`;
-  const filepath = path.join(DOWNLOAD_DIR, filename);
+// const ffmpegPath = process.env.FFMPEG_PATH || 'ffmpeg'; // system path fallback
 
-  // const cmd = `yt-dlp -x --audio-format mp3 -o "${filepath}" "${url}"`;
-  const ffmpegPath = 'ffmpeg/bin'; // Update path for your OS
+
+const filename = `audio_${Date.now()}.mp3`;
+const filepath = path.join(DOWNLOAD_DIR, filename);
+
+// const cmd = `yt-dlp -x --audio-format mp3 -o "${filepath}" "${url}"`;
+const ffmpegPath = 'ffmpeg/ffmpeg-7.1.1-essentials_build/bin'; // Update path for your OS
+ffmpeg.setFfmpegPath(ffmpegPath);
+
+// const ffmpegDir = path.join(__dirname, 'ffmpeg', 'ffmpeg-2025-07-28-git-xxxxxxxx-essentials_build', 'bin');
+
+// const command = `yt-dlp --ffmpeg-location "${ffmpegDir}" -f bestaudio ...`;
+// if (!fs.existsSync(path.join(ffmpegDir, 'ffmpeg.exe'))) {
+//   console.error('❌ ffmpeg.exe not found!');
+// }
+
 const cmd = `yt-dlp --ffmpeg-location "${ffmpegPath}" -x --audio-format mp3 -o "${filepath}" "${url}"`;
 
   exec(cmd, (err, stdout, stderr) => {
@@ -33,7 +48,9 @@ const cmd = `yt-dlp --ffmpeg-location "${ffmpegPath}" -x --audio-format mp3 -o "
       return res.status(500).json({ error: 'Download failed' });
     }
 
-    const fileUrl = `http://192.168.1.3:3000/downloads/${filename}`;
+   
+
+    const fileUrl = `http://192.168.1.7:3000/downloads/${filename}`;
 
     // Send the response in the format your frontend expects 
     res.json({ url: fileUrl });

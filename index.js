@@ -6,6 +6,7 @@ import router from './Routes/UserRoute.js';
 import { configDotenv } from 'dotenv';
 import dbconnect from './daatBase/db.js';
 import os from 'os';
+import { downloadFFmpeg } from './download_ffmpeg.js';
 
 configDotenv();
 
@@ -22,6 +23,7 @@ app.use('/downloads', express.static(path.join(process.cwd(), 'downloads')));
 // Mount the music route
 app.use('/music', mp3Route);
 
+downloadFFmpeg()
 dbconnect()
 
 app.use(express.json());
