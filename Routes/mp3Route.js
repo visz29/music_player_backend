@@ -2,6 +2,7 @@ import ytdlp from 'yt-dlp-exec';
 import ffmpegPath from 'ffmpeg-static';
 import fs from 'fs';
 import path from 'path';
+import { env } from 'process';
 
 const DOWNLOAD_DIR = path.join(process.cwd(), 'downloads');
 if (!fs.existsSync(DOWNLOAD_DIR)) {
@@ -26,6 +27,7 @@ const mp3Route = async (req, res) => {
       audioFormat: 'mp3',
       output: filepath,
       ffmpegLocation: ffmpegPath,
+      cookies: 'AKEyXzXdA8atk2kYY-C6qdqEDAwI1vuvhfGREBHp9oLYo7r8erLjJRFqMX6IIgd-9RxsDMltSDs',
     });
 
     const fileUrl = `/${filename}`;
