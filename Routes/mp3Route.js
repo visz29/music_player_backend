@@ -27,7 +27,6 @@ const mp3Route = async (req, res) => {
       audioFormat: 'mp3',
       output: filepath,
       ffmpegLocation: ffmpegPath,
-      cookies: 'AKEyXzXdA8atk2kYY-C6qdqEDAwI1vuvhfGREBHp9oLYo7r8erLjJRFqMX6IIgd-9RxsDMltSDs',
     });
 
     const fileUrl = `/${filename}`;
